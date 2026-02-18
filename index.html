@@ -5,32 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coldron Colombia</title>
 
-  <!-- Tailwind config (paleta Coldron) -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            coldron: {
-              50:  "#fbf6ee", // crema fondo
-              100: "#f3eadc",
-              200: "#e6d6bf",
-              300: "#d3bb97",
-              400: "#b88955",
-              500: "#9a5a21", // cobre
-              600: "#7c4318",
-              700: "#5a2f10",
-              800: "#3f220b",
-              900: "#2b1706",
-              950: "#1c0f04"
-            },
-            accent: "#ff4d12" // naranja casco
-          }
-        }
-      }
-    }
-  </script>
-
   <!-- Tailwind (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -38,6 +12,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
+    /* Imprimir: solo el resumen (#printArea) */
     @media print {
       .no-print { display: none !important; }
       #printArea { display: block !important; }
@@ -49,9 +24,9 @@
   </style>
 </head>
 
-<body class="bg-coldron-50 text-coldron-950">
+<body class="bg-slate-50 text-slate-900">
   <!-- HEADER -->
-  <header class="no-print sticky top-0 z-20 border-b border-coldron-200 bg-coldron-50/90 backdrop-blur">
+  <header class="no-print sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur">
     <div class="mx-auto max-w-6xl px-4 py-4">
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div class="flex items-center gap-3">
@@ -65,17 +40,16 @@
             onerror="this.style.display='none'"
           />
           <div>
-            <h1 class="text-xl font-bold tracking-tight text-coldron-950">Coldron Colombia</h1>
-            <p class="text-sm text-coldron-700">Formulario profesional para recopilar información y generar un PDF resumen.</p>
+            <h1 class="text-xl font-bold tracking-tight">Coldron Colombia</h1>
+            <p class="text-sm text-slate-600">Formulario profesional para recopilar la información y generar un PDF resumen.</p>
           </div>
         </div>
 
         <div class="flex items-center gap-3">
-          <span id="statusBadge" class="rounded-xl border border-coldron-200 bg-coldron-100 px-3 py-2 text-xs text-coldron-700">
-            Borrador local: <span class="font-semibold text-coldron-950" id="saveStatus">listo</span>
+          <span id="statusBadge" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-600">
+            Borrador local: <span class="font-semibold text-slate-900" id="saveStatus">listo</span>
           </span>
-          <button type="button"
-                  class="no-print rounded-xl bg-coldron-100 px-3 py-2 text-sm font-semibold text-coldron-950 hover:bg-coldron-200"
+          <button type="button" class="no-print rounded-xl bg-slate-100 px-3 py-2 text-sm font-semibold hover:bg-slate-200"
                   onclick="resetDraft()">
             Reiniciar
           </button>
@@ -92,8 +66,7 @@
           <div class="font-semibold text-rose-900">Faltan datos obligatorios</div>
           <p class="mt-1 text-sm text-rose-800">Completa lo siguiente para generar el resumen.</p>
         </div>
-        <button type="button"
-                class="rounded-xl bg-white px-3 py-1.5 text-sm font-semibold text-rose-900 ring-1 ring-rose-200 hover:bg-rose-100"
+        <button type="button" class="rounded-xl bg-white px-3 py-1.5 text-sm font-semibold text-rose-900 ring-1 ring-rose-200 hover:bg-rose-100"
                 onclick="hideAlert()">Cerrar</button>
       </div>
       <ul id="missingList" class="mt-3 list-disc space-y-1 pl-5 text-sm text-rose-900"></ul>
@@ -102,111 +75,109 @@
     <!-- FORM VIEW -->
     <section id="formView" class="no-print grid gap-6">
       <!-- Card: Datos del CDA -->
-      <section class="rounded-3xl border border-coldron-200 bg-white p-6 shadow-sm">
+      <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <div class="flex flex-col gap-1">
-          <h2 class="text-lg font-bold text-coldron-950">1) Datos del CDA</h2>
-          <p class="text-sm text-coldron-700">Información base para ficha, ubicación, confianza y CTA.</p>
+          <h2 class="text-lg font-bold">1) Datos del CDA</h2>
+          <p class="text-sm text-slate-600">Información base para ficha, ubicación, confianza y CTA.</p>
         </div>
 
         <div class="mt-6 grid gap-4 sm:grid-cols-2">
           <div>
-            <label class="text-sm font-semibold text-coldron-900">Nombre del CDA (comercial) <span class="text-rose-600">*</span></label>
+            <label class="text-sm font-semibold">Nombre del CDA (comercial) <span class="text-rose-600">*</span></label>
             <input id="cdaName" data-required="true" data-label="Nombre del CDA"
-              class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm" placeholder="Ej: CDA La 13" />
+              class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" placeholder="Ej: CDA La 13" />
           </div>
           <div>
-            <label class="text-sm font-semibold text-coldron-900">Razón social <span class="text-rose-600">*</span></label>
+            <label class="text-sm font-semibold">Razón social <span class="text-rose-600">*</span></label>
             <input id="legalName" data-required="true" data-label="Razón social"
-              class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm" placeholder="Ej: CDA LA 13 S.A.S." />
+              class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" placeholder="Ej: CDA LA 13 S.A.S." />
           </div>
 
           <div>
-            <label class="text-sm font-semibold text-coldron-900">NIT <span class="text-rose-600">*</span></label>
+            <label class="text-sm font-semibold">NIT <span class="text-rose-600">*</span></label>
             <input id="nit" data-required="true" data-label="NIT"
-              class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm" placeholder="Ej: 900123456-7" />
+              class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" placeholder="Ej: 900123456-7" />
           </div>
           <div>
-            <label class="text-sm font-semibold text-coldron-900">WhatsApp oficial <span class="text-rose-600">*</span></label>
+            <label class="text-sm font-semibold">WhatsApp oficial <span class="text-rose-600">*</span></label>
             <input id="whatsapp" data-required="true" data-label="WhatsApp oficial"
-              class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm" placeholder="Ej: +57 300 123 4567" />
+              class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" placeholder="Ej: +57 300 123 4567" />
           </div>
 
           <div class="sm:col-span-2">
-            <label class="text-sm font-semibold text-coldron-900">Dirección + Localidad + Barrio <span class="text-rose-600">*</span></label>
+            <label class="text-sm font-semibold">Dirección + Localidad + Barrio <span class="text-rose-600">*</span></label>
             <input id="address" data-required="true" data-label="Dirección/Localidad/Barrio"
-              class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm"
+              class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
               placeholder="Ej: Cra XX #XX-XX, Puente Aranda, Barrio X" />
           </div>
 
           <div>
-            <label class="text-sm font-semibold text-coldron-900">Link Google Maps (recomendado)</label>
-            <input id="maps" class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm"
+            <label class="text-sm font-semibold">Link Google Maps (recomendado)</label>
+            <input id="maps" class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
               placeholder="https://maps.app.goo.gl/..." />
           </div>
           <div>
-            <label class="text-sm font-semibold text-coldron-900">Horarios <span class="text-rose-600">*</span></label>
+            <label class="text-sm font-semibold">Horarios <span class="text-rose-600">*</span></label>
             <input id="hours" data-required="true" data-label="Horarios"
-              class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm"
+              class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
               placeholder="Ej: Lun–Sáb 7:00–17:00" />
           </div>
         </div>
       </section>
 
       <!-- Card: Operación y ventas -->
-      <section class="rounded-3xl border border-coldron-200 bg-white p-6 shadow-sm">
-        <h2 class="text-lg font-bold text-coldron-950">2) Operación, servicios y ventas</h2>
-        <p class="mt-1 text-sm text-coldron-700">Lo que vendemos, cómo atendemos y qué hace diferente al CDA.</p>
+      <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 class="text-lg font-bold">2) Operación, servicios y ventas</h2>
+        <p class="mt-1 text-sm text-slate-600">Lo que vendemos, cómo atendemos y qué hace diferente al CDA.</p>
 
         <div class="mt-6 grid gap-6">
-          <div class="rounded-2xl border border-coldron-200 bg-coldron-100 p-5">
-            <div class="text-sm font-semibold text-coldron-900">Tipo de línea <span class="text-rose-600">*</span></div>
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+            <div class="text-sm font-semibold">Tipo de línea <span class="text-rose-600">*</span></div>
             <div class="mt-3 grid gap-2 sm:grid-cols-4 text-sm">
-              <label class="flex items-center gap-2"><input id="lineMotos" type="checkbox" class="h-4 w-4 rounded border-coldron-300"> Motos</label>
-              <label class="flex items-center gap-2"><input id="lineLivianos" type="checkbox" class="h-4 w-4 rounded border-coldron-300"> Livianos</label>
-              <label class="flex items-center gap-2"><input id="linePesados" type="checkbox" class="h-4 w-4 rounded border-coldron-300"> Pesados</label>
-              <label class="flex items-center gap-2"><input id="lineMixto" type="checkbox" class="h-4 w-4 rounded border-coldron-300"> Mixto</label>
+              <label class="flex items-center gap-2"><input id="lineMotos" type="checkbox" class="h-4 w-4 rounded border-slate-300"> Motos</label>
+              <label class="flex items-center gap-2"><input id="lineLivianos" type="checkbox" class="h-4 w-4 rounded border-slate-300"> Livianos</label>
+              <label class="flex items-center gap-2"><input id="linePesados" type="checkbox" class="h-4 w-4 rounded border-slate-300"> Pesados</label>
+              <label class="flex items-center gap-2"><input id="lineMixto" type="checkbox" class="h-4 w-4 rounded border-slate-300"> Mixto</label>
             </div>
-            <div class="mt-2 text-xs text-coldron-700">Debes seleccionar al menos una opción.</div>
+            <div class="mt-2 text-xs text-slate-600">Debes seleccionar al menos una opción.</div>
           </div>
 
           <div class="grid gap-4 sm:grid-cols-2">
-            <div class="rounded-2xl border border-coldron-200 p-5">
-              <div class="text-sm font-semibold text-coldron-900">Modalidad de atención <span class="text-rose-600">*</span></div>
+            <div class="rounded-2xl border border-slate-200 p-5">
+              <div class="text-sm font-semibold">Modalidad de atención <span class="text-rose-600">*</span></div>
               <div class="mt-3 flex flex-wrap gap-3 text-sm">
                 <label class="flex items-center gap-2"><input type="radio" name="mode" value="Orden de llegada" class="h-4 w-4"> Orden de llegada</label>
                 <label class="flex items-center gap-2"><input type="radio" name="mode" value="Con agenda" class="h-4 w-4"> Con agenda</label>
               </div>
               <div class="mt-4">
-                <label class="text-sm font-semibold text-coldron-900">Tiempo promedio del proceso <span class="text-rose-600">*</span></label>
+                <label class="text-sm font-semibold">Tiempo promedio del proceso <span class="text-rose-600">*</span></label>
                 <input id="avgTime" data-required="true" data-label="Tiempo promedio del proceso"
-                  class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm" placeholder="Ej: 45–60 min" />
+                  class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" placeholder="Ej: 45–60 min" />
               </div>
               <div class="mt-4">
-                <label class="text-sm font-semibold text-coldron-900">Link wa.me (si agenda)</label>
-                <input id="waLink" class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm" placeholder="https://wa.me/57..." />
+                <label class="text-sm font-semibold">Link wa.me (si agenda)</label>
+                <input id="waLink" class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" placeholder="https://wa.me/57..." />
               </div>
             </div>
 
-            <div class="rounded-2xl border border-coldron-200 p-5">
-              <div class="text-sm font-semibold text-coldron-900">Diferenciales (mínimo 3) <span class="text-rose-600">*</span></div>
-              <p class="mt-1 text-sm text-coldron-700">Lo que los hace elegirlos a ustedes.</p>
+            <div class="rounded-2xl border border-slate-200 p-5">
+              <div class="text-sm font-semibold">Diferenciales (mínimo 3) <span class="text-rose-600">*</span></div>
+              <p class="mt-1 text-sm text-slate-600">Lo que los hace elegirlos a ustedes.</p>
               <div id="diffWrap" class="mt-4 grid gap-2"></div>
-              <button type="button"
-                      class="mt-3 rounded-xl bg-coldron-900 px-3 py-2 text-sm font-semibold text-white hover:bg-coldron-950"
+              <button type="button" class="mt-3 rounded-xl bg-slate-900 px-3 py-2 text-sm font-semibold text-white hover:bg-black"
                       onclick="addRow('diffWrap','diff')">
                 Agregar diferencial
               </button>
             </div>
           </div>
 
-          <div class="rounded-2xl border border-coldron-200 p-5">
+          <div class="rounded-2xl border border-slate-200 p-5">
             <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <div class="text-sm font-semibold text-coldron-900">Servicios ofrecidos <span class="text-rose-600">*</span></div>
-                <p class="text-sm text-coldron-700">Ej: RTM, Gases, Pre-revisión, etc. (mínimo 1).</p>
+                <div class="text-sm font-semibold">Servicios ofrecidos <span class="text-rose-600">*</span></div>
+                <p class="text-sm text-slate-600">Ej: RTM, Gases, Pre-revisión, etc. (mínimo 1).</p>
               </div>
-              <button type="button"
-                      class="rounded-xl bg-coldron-100 px-3 py-2 text-sm font-semibold text-coldron-950 hover:bg-coldron-200"
+              <button type="button" class="rounded-xl bg-slate-100 px-3 py-2 text-sm font-semibold hover:bg-slate-200"
                       onclick="addRow('servicesWrap','service')">
                 Agregar servicio
               </button>
@@ -214,20 +185,20 @@
             <div id="servicesWrap" class="mt-4 grid gap-2"></div>
           </div>
 
-          <div class="rounded-2xl border border-coldron-200 p-5">
-            <div class="text-sm font-semibold text-coldron-900">Precios (si aplican)</div>
+          <div class="rounded-2xl border border-slate-200 p-5">
+            <div class="text-sm font-semibold">Precios (si aplican)</div>
             <div class="mt-4 grid gap-3 sm:grid-cols-3">
               <div>
-                <label class="text-sm font-semibold text-coldron-900">Moto</label>
-                <input id="priceMoto" class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm" placeholder="$" />
+                <label class="text-sm font-semibold">Moto</label>
+                <input id="priceMoto" class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" placeholder="$" />
               </div>
               <div>
-                <label class="text-sm font-semibold text-coldron-900">Liviano</label>
-                <input id="priceLiviano" class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm" placeholder="$" />
+                <label class="text-sm font-semibold">Liviano</label>
+                <input id="priceLiviano" class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" placeholder="$" />
               </div>
               <div>
-                <label class="text-sm font-semibold text-coldron-900">Pesado</label>
-                <input id="pricePesado" class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm" placeholder="$" />
+                <label class="text-sm font-semibold">Pesado</label>
+                <input id="pricePesado" class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" placeholder="$" />
               </div>
             </div>
           </div>
@@ -235,15 +206,15 @@
       </section>
 
       <!-- Card: Contenido y redes -->
-      <section class="rounded-3xl border border-coldron-200 bg-white p-6 shadow-sm">
-        <h2 class="text-lg font-bold text-coldron-950">3) Contenido y redes</h2>
-        <p class="mt-1 text-sm text-coldron-700">Para que el contenido venda y también construya marca.</p>
+      <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 class="text-lg font-bold">3) Contenido y redes</h2>
+        <p class="mt-1 text-sm text-slate-600">Para que el contenido venda y también construya marca.</p>
 
         <div class="mt-6 grid gap-4 sm:grid-cols-2">
           <div>
-            <label class="text-sm font-semibold text-coldron-900">Objetivo principal <span class="text-rose-600">*</span></label>
+            <label class="text-sm font-semibold">Objetivo principal <span class="text-rose-600">*</span></label>
             <select id="goal" data-required="true" data-label="Objetivo principal"
-              class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm">
+              class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm">
               <option value="">Selecciona</option>
               <option>Ventas (WhatsApp / citas)</option>
               <option>Marca (confianza / reputación)</option>
@@ -252,9 +223,9 @@
           </div>
 
           <div>
-            <label class="text-sm font-semibold text-coldron-900">CTA principal <span class="text-rose-600">*</span></label>
+            <label class="text-sm font-semibold">CTA principal <span class="text-rose-600">*</span></label>
             <select id="cta" data-required="true" data-label="CTA principal"
-              class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm">
+              class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm">
               <option value="">Selecciona</option>
               <option>Agenda por WhatsApp</option>
               <option>Ven sin cita</option>
@@ -263,32 +234,31 @@
             </select>
           </div>
 
-          <div class="sm:col-span-2 rounded-2xl border border-coldron-200 bg-coldron-100 p-5">
-            <div class="text-sm font-semibold text-coldron-900">Redes activas</div>
+          <div class="sm:col-span-2 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+            <div class="text-sm font-semibold">Redes activas</div>
             <div class="mt-3 grid gap-2 sm:grid-cols-5 text-sm">
-              <label class="flex items-center gap-2"><input id="netIG" type="checkbox" class="h-4 w-4 rounded border-coldron-300"> IG</label>
-              <label class="flex items-center gap-2"><input id="netTT" type="checkbox" class="h-4 w-4 rounded border-coldron-300"> TikTok</label>
-              <label class="flex items-center gap-2"><input id="netFB" type="checkbox" class="h-4 w-4 rounded border-coldron-300"> Facebook</label>
-              <label class="flex items-center gap-2"><input id="netYT" type="checkbox" class="h-4 w-4 rounded border-coldron-300"> YouTube</label>
-              <label class="flex items-center gap-2"><input id="netGB" type="checkbox" class="h-4 w-4 rounded border-coldron-300"> Google Business</label>
+              <label class="flex items-center gap-2"><input id="netIG" type="checkbox" class="h-4 w-4 rounded border-slate-300"> IG</label>
+              <label class="flex items-center gap-2"><input id="netTT" type="checkbox" class="h-4 w-4 rounded border-slate-300"> TikTok</label>
+              <label class="flex items-center gap-2"><input id="netFB" type="checkbox" class="h-4 w-4 rounded border-slate-300"> Facebook</label>
+              <label class="flex items-center gap-2"><input id="netYT" type="checkbox" class="h-4 w-4 rounded border-slate-300"> YouTube</label>
+              <label class="flex items-center gap-2"><input id="netGB" type="checkbox" class="h-4 w-4 rounded border-slate-300"> Google Business</label>
             </div>
             <div class="mt-4 grid gap-3 sm:grid-cols-2">
               <div>
-                <label class="text-sm font-semibold text-coldron-900">Usuario / @ (principal)</label>
-                <input id="handle" class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm" placeholder="@usuario" />
+                <label class="text-sm font-semibold">Usuario / @ (principal)</label>
+                <input id="handle" class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" placeholder="@usuario" />
               </div>
               <div>
-                <label class="text-sm font-semibold text-coldron-900">Link (principal)</label>
-                <input id="socialLink" class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm" placeholder="https://..." />
+                <label class="text-sm font-semibold">Link (principal)</label>
+                <input id="socialLink" class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" placeholder="https://..." />
               </div>
             </div>
           </div>
 
           <div class="sm:col-span-2">
-            <label class="text-sm font-semibold text-coldron-900">Mensajes clave (mínimo 3) <span class="text-rose-600">*</span></label>
+            <label class="text-sm font-semibold">Mensajes clave (mínimo 3) <span class="text-rose-600">*</span></label>
             <div id="msgWrap" class="mt-2 grid gap-2"></div>
-            <button type="button"
-                    class="mt-3 rounded-xl bg-coldron-900 px-3 py-2 text-sm font-semibold text-white hover:bg-coldron-950"
+            <button type="button" class="mt-3 rounded-xl bg-slate-900 px-3 py-2 text-sm font-semibold text-white hover:bg-black"
                     onclick="addRow('msgWrap','msg')">
               Agregar mensaje
             </button>
@@ -297,19 +267,18 @@
       </section>
 
       <!-- Card: Voceros y permisos -->
-      <section class="rounded-3xl border border-coldron-200 bg-white p-6 shadow-sm">
-        <h2 class="text-lg font-bold text-coldron-950">4) Voceros y permisos de grabación</h2>
-        <p class="mt-1 text-sm text-coldron-700">Quién puede salir en cámara y condiciones para grabar sin fricciones.</p>
+      <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 class="text-lg font-bold">4) Voceros y permisos de grabación</h2>
+        <p class="mt-1 text-sm text-slate-600">Quién puede salir en cámara y condiciones para grabar sin fricciones.</p>
 
         <div class="mt-6 grid gap-6">
-          <div class="rounded-2xl border border-coldron-200 p-5">
+          <div class="rounded-2xl border border-slate-200 p-5">
             <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <div class="text-sm font-semibold text-coldron-900">Personas autorizadas para salir en cámara <span class="text-rose-600">*</span></div>
-                <p class="text-sm text-coldron-700">Mínimo 1 persona. Incluye rol y tema que domina.</p>
+                <div class="text-sm font-semibold">Personas autorizadas para salir en cámara <span class="text-rose-600">*</span></div>
+                <p class="text-sm text-slate-600">Mínimo 1 persona. Incluye rol y tema que domina.</p>
               </div>
-              <button type="button"
-                      class="rounded-xl bg-coldron-100 px-3 py-2 text-sm font-semibold text-coldron-950 hover:bg-coldron-200"
+              <button type="button" class="rounded-xl bg-slate-100 px-3 py-2 text-sm font-semibold hover:bg-slate-200"
                       onclick="addPerson()">
                 Agregar persona
               </button>
@@ -319,32 +288,32 @@
 
           <div class="grid gap-4 sm:grid-cols-2">
             <div>
-              <label class="text-sm font-semibold text-coldron-900">Zonas permitidas para grabar <span class="text-rose-600">*</span></label>
+              <label class="text-sm font-semibold">Zonas permitidas para grabar <span class="text-rose-600">*</span></label>
               <textarea id="zonesAllowed" data-required="true" data-label="Zonas permitidas"
-                class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm" rows="4"
+                class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" rows="4"
                 placeholder="Ej: recepción, sala de espera, línea livianos, fachada..."></textarea>
             </div>
             <div>
-              <label class="text-sm font-semibold text-coldron-900">Zonas NO permitidas <span class="text-rose-600">*</span></label>
+              <label class="text-sm font-semibold">Zonas NO permitidas <span class="text-rose-600">*</span></label>
               <textarea id="zonesNo" data-required="true" data-label="Zonas no permitidas"
-                class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm" rows="4"
+                class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" rows="4"
                 placeholder="Ej: área de documentos, placa visible, zonas internas..."></textarea>
             </div>
           </div>
 
-          <div class="rounded-2xl border border-coldron-200 bg-coldron-100 p-5">
-            <div class="text-sm font-semibold text-coldron-900">Palabras obligatorias y prohibidas (en contenido)</div>
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+            <div class="text-sm font-semibold">Palabras obligatorias y prohibidas (en contenido)</div>
             <div class="mt-4 grid gap-4 sm:grid-cols-2">
               <div>
-                <label class="text-sm font-semibold text-coldron-900">Palabras que SÍ deben aparecer <span class="text-rose-600">*</span></label>
+                <label class="text-sm font-semibold">Palabras que SÍ deben aparecer <span class="text-rose-600">*</span></label>
                 <input id="mustWords" data-required="true" data-label="Palabras obligatorias"
-                  class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm"
+                  class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
                   placeholder="Ej: transparencia, diagnóstico, confianza" />
               </div>
               <div>
-                <label class="text-sm font-semibold text-coldron-900">Palabras que NO deben aparecer <span class="text-rose-600">*</span></label>
+                <label class="text-sm font-semibold">Palabras que NO deben aparecer <span class="text-rose-600">*</span></label>
                 <input id="noWords" data-required="true" data-label="Palabras prohibidas"
-                  class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm"
+                  class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
                   placeholder="Ej: garantizado, pasa seguro, aprobado fijo" />
               </div>
             </div>
@@ -353,15 +322,14 @@
       </section>
 
       <!-- Actions -->
-      <section class="rounded-3xl border border-coldron-200 bg-white p-5 shadow-sm">
+      <section class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
         <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <div class="text-sm font-semibold text-coldron-900">Finalizar</div>
-            <p class="mt-1 text-sm text-coldron-700">Genera el resumen y luego el PDF (descargar o imprimir/guardar).</p>
+            <div class="text-sm font-semibold">Finalizar</div>
+            <p class="mt-1 text-sm text-slate-600">Genera el resumen y luego el PDF (descargar o imprimir/guardar).</p>
           </div>
           <div class="flex flex-wrap gap-3">
-            <button type="button"
-                    class="rounded-xl bg-coldron-900 px-4 py-2 text-sm font-semibold text-white hover:bg-coldron-950"
+            <button type="button" class="rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-black"
                     onclick="goToSummary()">
               Ver resumen
             </button>
@@ -370,34 +338,36 @@
       </section>
     </section>
 
-    <!-- SUMMARY VIEW -->
+    <!-- SUMMARY VIEW (ON SCREEN + PRINT AREA) -->
     <section id="summaryView" class="hidden">
+      <!-- Botones (solo 2) -->
       <div class="no-print mb-4 flex flex-wrap items-center justify-between gap-3">
-        <button type="button"
-                class="rounded-xl border border-coldron-200 bg-white px-4 py-2 text-sm font-semibold text-coldron-950 hover:bg-coldron-50"
+        <button type="button" class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold hover:bg-slate-50"
                 onclick="backToForm()">
           Volver a editar
         </button>
 
         <div class="flex flex-wrap gap-3">
-          <button type="button"
-                  class="rounded-xl bg-accent px-4 py-2 text-sm font-semibold text-white hover:brightness-95"
+          <button type="button" class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
                   onclick="downloadPDF()">
             Descargar PDF
           </button>
-          <button type="button"
-                  class="rounded-xl bg-coldron-900 px-4 py-2 text-sm font-semibold text-white hover:bg-coldron-950"
+          <button type="button" class="rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-black"
                   onclick="printPDF()">
             Imprimir / Guardar PDF
           </button>
         </div>
       </div>
 
-      <section id="printArea" class="rounded-3xl border border-coldron-200 bg-white p-6 shadow-sm"></section>
+      <!-- Este es el contenido que se imprime / exporta -->
+      <section id="printArea" class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"></section>
     </section>
   </main>
 
   <script>
+    /***************
+     * Draft local
+     ***************/
     const STORAGE_KEY = "coldron_cda_brief_v1";
     const setStatus = (t) => (document.getElementById("saveStatus").textContent = t);
 
@@ -409,7 +379,6 @@
         setStatus("sin guardar");
       }
     }
-
     function loadDraft() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
@@ -491,9 +460,9 @@
       const row = document.createElement("div");
       row.className = "flex gap-2";
       row.innerHTML = `
-        <input id="${prefix}_${idx}" class="w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm"
+        <input id="${prefix}_${idx}" class="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
                placeholder="Escribe aquí..." value="${escapeHtml(value)}" />
-        <button type="button" class="rounded-xl bg-coldron-100 px-3 py-2 text-sm font-semibold text-coldron-950 hover:bg-coldron-200" title="Eliminar">✕</button>
+        <button type="button" class="rounded-xl bg-slate-100 px-3 py-2 text-sm font-semibold hover:bg-slate-200" title="Eliminar">✕</button>
       `;
       row.querySelector("button").onclick = () => { row.remove(); saveDraft(); };
       row.querySelector("input").addEventListener("input", saveDraftDebounced);
@@ -513,24 +482,24 @@
 
       const p = person || { name:"", role:"Director técnico", topic:"", availability:"Mañana", authorized:false };
       const card = document.createElement("div");
-      card.className = "rounded-2xl border border-coldron-200 bg-white p-4";
+      card.className = "rounded-2xl border border-slate-200 bg-white p-4";
       card.setAttribute("data-person", "1");
 
       card.innerHTML = `
         <div class="flex items-start justify-between gap-3">
-          <div class="text-sm font-semibold text-coldron-900">Persona ${idx + 1}</div>
-          <button type="button" class="rounded-xl bg-coldron-100 px-3 py-2 text-sm font-semibold text-coldron-950 hover:bg-coldron-200">Eliminar</button>
+          <div class="text-sm font-semibold">Persona ${idx + 1}</div>
+          <button type="button" class="rounded-xl bg-slate-100 px-3 py-2 text-sm font-semibold hover:bg-slate-200">Eliminar</button>
         </div>
 
         <div class="mt-4 grid gap-3 sm:grid-cols-2">
           <div>
-            <label class="text-sm font-semibold text-coldron-900">Nombre completo <span class="text-rose-600">*</span></label>
+            <label class="text-sm font-semibold">Nombre completo <span class="text-rose-600">*</span></label>
             <input data-p="name" data-required="true" data-label="Nombre de persona autorizada"
-              class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm" value="${escapeHtml(p.name)}" />
+              class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" value="${escapeHtml(p.name)}" />
           </div>
           <div>
-            <label class="text-sm font-semibold text-coldron-900">Rol / cargo <span class="text-rose-600">*</span></label>
-            <select data-p="role" class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm">
+            <label class="text-sm font-semibold">Rol / cargo <span class="text-rose-600">*</span></label>
+            <select data-p="role" class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm">
               ${["Gerente","Director técnico","Inspector","Asesor comercial","Servicio al cliente","Otro"].map(opt =>
                 `<option ${p.role===opt?"selected":""}>${opt}</option>`
               ).join("")}
@@ -538,15 +507,15 @@
           </div>
 
           <div class="sm:col-span-2">
-            <label class="text-sm font-semibold text-coldron-900">Tema que puede explicar en 30 segundos <span class="text-rose-600">*</span></label>
+            <label class="text-sm font-semibold">Tema que puede explicar en 30 segundos <span class="text-rose-600">*</span></label>
             <textarea data-p="topic" data-required="true" data-label="Tema que explica la persona"
-              class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm" rows="3"
+              class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" rows="3"
               placeholder="Ej: qué revisar antes de venir, por qué fallan frenos, mitos del RTM...">${escapeHtml(p.topic)}</textarea>
           </div>
 
           <div>
-            <label class="text-sm font-semibold text-coldron-900">Disponibilidad</label>
-            <select data-p="availability" class="mt-1 w-full rounded-xl border border-coldron-200 px-3 py-2 text-sm">
+            <label class="text-sm font-semibold">Disponibilidad</label>
+            <select data-p="availability" class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm">
               ${["Mañana","Tarde","Día completo"].map(opt =>
                 `<option ${p.availability===opt?"selected":""}>${opt}</option>`
               ).join("")}
@@ -554,10 +523,10 @@
           </div>
 
           <div class="flex items-start gap-3 pt-1">
-            <input data-p="authorized" type="checkbox" class="mt-1 h-4 w-4 rounded border-coldron-300" ${p.authorized?"checked":""} />
+            <input data-p="authorized" type="checkbox" class="mt-1 h-4 w-4 rounded border-slate-300" ${p.authorized?"checked":""} />
             <div>
-              <div class="text-sm font-semibold text-coldron-900">Autorización de imagen <span class="text-rose-600">*</span></div>
-              <div class="text-xs text-coldron-700">Confirmación para aparecer en cámara y uso en redes.</div>
+              <div class="text-sm font-semibold">Autorización de imagen <span class="text-rose-600">*</span></div>
+              <div class="text-xs text-slate-600">Confirmación para aparecer en cámara y uso en redes.</div>
             </div>
           </div>
         </div>
@@ -602,8 +571,8 @@
 
       document.querySelectorAll("#formView [data-required='true']").forEach(el => {
         const label = el.getAttribute("data-label") || "Campo obligatorio";
-        const v = (el.value || "").trim();
-        if (!v) missing.push(label);
+        const val = (el.value || "").trim();
+        if (!val) missing.push(label);
       });
 
       const anyLine = ["lineMotos","lineLivianos","linePesados","lineMixto"].some(id => document.getElementById(id).checked);
@@ -669,7 +638,7 @@
     }
 
     function collectData() {
-      return {
+      const d = {
         cdaName: val("cdaName"),
         legalName: val("legalName"),
         nit: val("nit"),
@@ -712,6 +681,7 @@
         socialLink: val("socialLink"),
 
         messages: getListValues("msgWrap"),
+
         people: collectPeople(),
 
         zonesAllowed: val("zonesAllowed"),
@@ -721,6 +691,7 @@
 
         generatedAt: new Date().toISOString(),
       };
+      return d;
     }
 
     function val(id) {
@@ -771,15 +742,15 @@
 
       const list = (arr) => (arr && arr.length)
         ? `<ul class="mt-2 list-disc pl-5 text-sm">${arr.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`
-        : `<div class="mt-2 text-sm text-coldron-700">No registrado</div>`;
+        : `<div class="mt-2 text-sm text-slate-500">No registrado</div>`;
 
       const peopleRows = (d.people || []).map(p => `
         <tr>
-          <td class="border-b border-coldron-200 py-2 pr-3">${esc(p.name)}</td>
-          <td class="border-b border-coldron-200 py-2 pr-3">${esc(p.role)}</td>
-          <td class="border-b border-coldron-200 py-2 pr-3">${esc(p.availability || "")}</td>
-          <td class="border-b border-coldron-200 py-2 pr-3">${esc(p.topic)}</td>
-          <td class="border-b border-coldron-200 py-2 pr-3">${p.authorized ? "Sí" : "No"}</td>
+          <td class="border-b border-slate-200 py-2 pr-3">${esc(p.name)}</td>
+          <td class="border-b border-slate-200 py-2 pr-3">${esc(p.role)}</td>
+          <td class="border-b border-slate-200 py-2 pr-3">${esc(p.availability || "")}</td>
+          <td class="border-b border-slate-200 py-2 pr-3">${esc(p.topic)}</td>
+          <td class="border-b border-slate-200 py-2 pr-3">${p.authorized ? "Sí" : "No"}</td>
         </tr>
       `).join("");
 
@@ -799,32 +770,32 @@
                   onerror="this.style.display='none'"
                 >
                 <div>
-                  <h1 class="text-2xl font-bold text-coldron-950">Coldron Colombia</h1>
-                  <div class="text-sm text-coldron-700">Reporte resumen</div>
+                  <h1 class="text-2xl font-bold">Coldron Colombia</h1>
+                  <div class="text-sm text-slate-600">Reporte resumen</div>
                 </div>
               </div>
               <div class="text-right text-sm">
-                <div class="font-semibold text-coldron-900">Generado</div>
-                <div class="text-coldron-700">${esc(date)}</div>
+                <div class="font-semibold">Generado</div>
+                <div class="text-slate-700">${esc(date)}</div>
               </div>
             </div>
 
-            <div class="mt-4 rounded-2xl border border-coldron-200 p-4">
+            <div class="mt-4 rounded-2xl border border-slate-200 p-4">
               <div class="grid gap-3 sm:grid-cols-3 text-sm">
                 <div>
-                  <div class="text-xs font-semibold text-coldron-700">CDA</div>
-                  <div class="text-sm font-semibold text-coldron-950">${esc(d.cdaName)}</div>
-                  <div class="text-xs text-coldron-700">${esc(d.legalName)} | NIT: ${esc(d.nit)}</div>
+                  <div class="text-xs font-semibold text-slate-600">CDA</div>
+                  <div class="text-sm font-semibold">${esc(d.cdaName)}</div>
+                  <div class="text-xs text-slate-600">${esc(d.legalName)} | NIT: ${esc(d.nit)}</div>
                 </div>
                 <div>
-                  <div class="text-xs font-semibold text-coldron-700">Ubicación</div>
-                  <div class="text-sm text-coldron-950">${esc(d.address)}</div>
-                  <div class="text-xs text-coldron-700">${d.maps ? esc(d.maps) : "Maps no registrado"}</div>
+                  <div class="text-xs font-semibold text-slate-600">Ubicación</div>
+                  <div class="text-sm">${esc(d.address)}</div>
+                  <div class="text-xs text-slate-600">${d.maps ? esc(d.maps) : "Maps no registrado"}</div>
                 </div>
                 <div>
-                  <div class="text-xs font-semibold text-coldron-700">Contacto</div>
-                  <div class="text-sm text-coldron-950">WhatsApp: ${esc(d.whatsapp)}</div>
-                  <div class="text-xs text-coldron-700">Horario: ${esc(d.hours)}</div>
+                  <div class="text-xs font-semibold text-slate-600">Contacto</div>
+                  <div class="text-sm">WhatsApp: ${esc(d.whatsapp)}</div>
+                  <div class="text-xs text-slate-600">Horario: ${esc(d.hours)}</div>
                 </div>
               </div>
             </div>
@@ -833,32 +804,32 @@
           <div class="page-break"></div>
 
           <div class="avoid-break">
-            <h2 class="text-lg font-bold text-coldron-950">1. Operación y ventas</h2>
-            <div class="mt-3 rounded-2xl border border-coldron-200 p-4 text-sm">
+            <h2 class="text-lg font-bold">1. Operación y ventas</h2>
+            <div class="mt-3 rounded-2xl border border-slate-200 p-4 text-sm">
               <div class="grid gap-3 sm:grid-cols-3">
-                <div><span class="text-xs font-semibold text-coldron-700 block">Tipo de línea</span>${esc(lineLabels.join(", "))}</div>
-                <div><span class="text-xs font-semibold text-coldron-700 block">Modalidad</span>${esc(d.mode)}</div>
-                <div><span class="text-xs font-semibold text-coldron-700 block">Tiempo promedio</span>${esc(d.avgTime)}</div>
-                <div class="sm:col-span-3"><span class="text-xs font-semibold text-coldron-700 block">WhatsApp (agenda)</span>${d.waLink ? esc(d.waLink) : "No registrado"}</div>
+                <div><span class="text-xs font-semibold text-slate-600 block">Tipo de línea</span>${esc(lineLabels.join(", "))}</div>
+                <div><span class="text-xs font-semibold text-slate-600 block">Modalidad</span>${esc(d.mode)}</div>
+                <div><span class="text-xs font-semibold text-slate-600 block">Tiempo promedio</span>${esc(d.avgTime)}</div>
+                <div class="sm:col-span-3"><span class="text-xs font-semibold text-slate-600 block">WhatsApp (agenda)</span>${d.waLink ? esc(d.waLink) : "No registrado"}</div>
               </div>
             </div>
 
-            <div class="mt-4 rounded-2xl border border-coldron-200 p-4">
-              <div class="text-sm font-semibold text-coldron-900">Diferenciales</div>
+            <div class="mt-4 rounded-2xl border border-slate-200 p-4">
+              <div class="text-sm font-semibold">Diferenciales</div>
               ${list(d.differentials)}
             </div>
 
-            <div class="mt-4 rounded-2xl border border-coldron-200 p-4">
-              <div class="text-sm font-semibold text-coldron-900">Servicios</div>
+            <div class="mt-4 rounded-2xl border border-slate-200 p-4">
+              <div class="text-sm font-semibold">Servicios</div>
               ${list(d.services)}
             </div>
 
-            <div class="mt-4 rounded-2xl border border-coldron-200 p-4">
-              <div class="text-sm font-semibold text-coldron-900">Precios (si aplican)</div>
+            <div class="mt-4 rounded-2xl border border-slate-200 p-4">
+              <div class="text-sm font-semibold">Precios (si aplican)</div>
               <div class="mt-2 grid gap-2 sm:grid-cols-3 text-sm">
-                <div><span class="text-xs font-semibold text-coldron-700 block">Moto</span>${esc(d.prices.moto || "No registrado")}</div>
-                <div><span class="text-xs font-semibold text-coldron-700 block">Liviano</span>${esc(d.prices.liviano || "No registrado")}</div>
-                <div><span class="text-xs font-semibold text-coldron-700 block">Pesado</span>${esc(d.prices.pesado || "No registrado")}</div>
+                <div><span class="text-xs font-semibold text-slate-600 block">Moto</span>${esc(d.prices.moto || "No registrado")}</div>
+                <div><span class="text-xs font-semibold text-slate-600 block">Liviano</span>${esc(d.prices.liviano || "No registrado")}</div>
+                <div><span class="text-xs font-semibold text-slate-600 block">Pesado</span>${esc(d.prices.pesado || "No registrado")}</div>
               </div>
             </div>
           </div>
@@ -866,19 +837,19 @@
           <div class="page-break"></div>
 
           <div class="avoid-break">
-            <h2 class="text-lg font-bold text-coldron-950">2. Contenido y redes</h2>
-            <div class="mt-3 rounded-2xl border border-coldron-200 p-4 text-sm">
+            <h2 class="text-lg font-bold">2. Contenido y redes</h2>
+            <div class="mt-3 rounded-2xl border border-slate-200 p-4 text-sm">
               <div class="grid gap-3 sm:grid-cols-2">
-                <div><span class="text-xs font-semibold text-coldron-700 block">Objetivo</span>${esc(d.goal)}</div>
-                <div><span class="text-xs font-semibold text-coldron-700 block">CTA principal</span>${esc(d.cta)}</div>
-                <div class="sm:col-span-2"><span class="text-xs font-semibold text-coldron-700 block">Redes activas</span>${esc(nets.join(", ") || "No registrado")}</div>
-                <div><span class="text-xs font-semibold text-coldron-700 block">Usuario/@</span>${esc(d.handle || "No registrado")}</div>
-                <div><span class="text-xs font-semibold text-coldron-700 block">Link</span>${esc(d.socialLink || "No registrado")}</div>
+                <div><span class="text-xs font-semibold text-slate-600 block">Objetivo</span>${esc(d.goal)}</div>
+                <div><span class="text-xs font-semibold text-slate-600 block">CTA principal</span>${esc(d.cta)}</div>
+                <div class="sm:col-span-2"><span class="text-xs font-semibold text-slate-600 block">Redes activas</span>${esc(nets.join(", ") || "No registrado")}</div>
+                <div><span class="text-xs font-semibold text-slate-600 block">Usuario/@</span>${esc(d.handle || "No registrado")}</div>
+                <div><span class="text-xs font-semibold text-slate-600 block">Link</span>${esc(d.socialLink || "No registrado")}</div>
               </div>
             </div>
 
-            <div class="mt-4 rounded-2xl border border-coldron-200 p-4">
-              <div class="text-sm font-semibold text-coldron-900">Mensajes clave</div>
+            <div class="mt-4 rounded-2xl border border-slate-200 p-4">
+              <div class="text-sm font-semibold">Mensajes clave</div>
               ${list(d.messages)}
             </div>
           </div>
@@ -886,48 +857,48 @@
           <div class="page-break"></div>
 
           <div class="avoid-break">
-            <h2 class="text-lg font-bold text-coldron-950">3. Voceros y permisos</h2>
+            <h2 class="text-lg font-bold">3. Voceros y permisos</h2>
 
-            <div class="mt-3 rounded-2xl border border-coldron-200 p-4">
-              <div class="text-sm font-semibold text-coldron-900">Personas autorizadas para salir en cámara</div>
+            <div class="mt-3 rounded-2xl border border-slate-200 p-4">
+              <div class="text-sm font-semibold">Personas autorizadas para salir en cámara</div>
               <div class="mt-3 overflow-x-auto">
                 <table class="w-full min-w-[820px] border-collapse text-sm">
                   <thead>
                     <tr class="text-left">
-                      <th class="border-b border-coldron-200 py-2 pr-3">Nombre</th>
-                      <th class="border-b border-coldron-200 py-2 pr-3">Rol</th>
-                      <th class="border-b border-coldron-200 py-2 pr-3">Disponibilidad</th>
-                      <th class="border-b border-coldron-200 py-2 pr-3">Tema</th>
-                      <th class="border-b border-coldron-200 py-2 pr-3">Autorizado</th>
+                      <th class="border-b border-slate-200 py-2 pr-3">Nombre</th>
+                      <th class="border-b border-slate-200 py-2 pr-3">Rol</th>
+                      <th class="border-b border-slate-200 py-2 pr-3">Disponibilidad</th>
+                      <th class="border-b border-slate-200 py-2 pr-3">Tema</th>
+                      <th class="border-b border-slate-200 py-2 pr-3">Autorizado</th>
                     </tr>
                   </thead>
                   <tbody>
-                    ${peopleRows || `<tr><td colspan="5" class="py-3 text-coldron-700">No registrado</td></tr>`}
+                    ${peopleRows || `<tr><td colspan="5" class="py-3 text-slate-500">No registrado</td></tr>`}
                   </tbody>
                 </table>
               </div>
             </div>
 
             <div class="mt-4 grid gap-4 sm:grid-cols-2">
-              <div class="rounded-2xl border border-coldron-200 p-4">
-                <div class="text-sm font-semibold text-coldron-900">Zonas permitidas</div>
-                <div class="mt-2 text-sm text-coldron-950">${esc(d.zonesAllowed)}</div>
+              <div class="rounded-2xl border border-slate-200 p-4">
+                <div class="text-sm font-semibold">Zonas permitidas</div>
+                <div class="mt-2 text-sm">${esc(d.zonesAllowed)}</div>
               </div>
-              <div class="rounded-2xl border border-coldron-200 p-4">
-                <div class="text-sm font-semibold text-coldron-900">Zonas no permitidas</div>
-                <div class="mt-2 text-sm text-coldron-950">${esc(d.zonesNo)}</div>
+              <div class="rounded-2xl border border-slate-200 p-4">
+                <div class="text-sm font-semibold">Zonas no permitidas</div>
+                <div class="mt-2 text-sm">${esc(d.zonesNo)}</div>
               </div>
             </div>
 
-            <div class="mt-4 rounded-2xl border border-coldron-200 bg-coldron-100 p-4">
-              <div class="text-sm font-semibold text-coldron-900">Lenguaje del contenido</div>
+            <div class="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div class="text-sm font-semibold">Lenguaje del contenido</div>
               <div class="mt-3 grid gap-3 sm:grid-cols-2 text-sm">
-                <div><span class="text-xs font-semibold text-coldron-700 block">Debe aparecer</span>${esc(d.mustWords)}</div>
-                <div><span class="text-xs font-semibold text-coldron-700 block">No debe aparecer</span>${esc(d.noWords)}</div>
+                <div><span class="text-xs font-semibold text-slate-600 block">Debe aparecer</span>${esc(d.mustWords)}</div>
+                <div><span class="text-xs font-semibold text-slate-600 block">No debe aparecer</span>${esc(d.noWords)}</div>
               </div>
             </div>
 
-            <div class="mt-6 text-xs text-coldron-700">
+            <div class="mt-6 text-xs text-slate-500">
               Documento generado para operación de contenidos por Coldron Colombia.
             </div>
           </div>
